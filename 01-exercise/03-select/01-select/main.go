@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+  "fmt"
 )
 
 func main() {
@@ -19,5 +20,15 @@ func main() {
 	}()
 
 	// TODO: multiplex recv on channel - ch1, ch2
+  completed := 0
+  for completed < 2 {
+    select {
+      case v := <- ch1:
+        fmt.Println(v)
+      case v := <- ch2:
+        fmt.Println(v)
+    }
 
+    completed++
+  }
 }
