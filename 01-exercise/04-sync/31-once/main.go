@@ -7,6 +7,7 @@ import (
 
 func main() {
 	var wg sync.WaitGroup
+  var initOnce sync.Once
 
 	load := func() {
 		fmt.Println("Run only once initialization function")
@@ -18,7 +19,7 @@ func main() {
 			defer wg.Done()
 
 			//TODO: modify so that load function gets called only once.
-			load()
+			initOnce.Do(load)
 		}()
 	}
 	wg.Wait()
